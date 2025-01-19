@@ -26,7 +26,8 @@ const Navbar: React.FC = () => {
         {/* Logo */}
 
         <div className="text-lg font-bold">
-          <Image src={"/logo.png"} alt="Logo" width={40} height={40} />
+          <p className="text-bold text-xl">{"<WeTalk>"}</p>
+          <p className="text-xs font-mono ">createdby:ayush patwal</p>
         </div>
 
         {/* Desktop Menu */}
