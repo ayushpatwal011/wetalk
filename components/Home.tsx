@@ -7,7 +7,7 @@ const Home = async () => {
 
     const user = await currentUser()
   return (
-    <div className='flex'>
+    <div className='w-full flex justify-center gap-12 pt-16 md:pt-24 '>
     <Slider user={user!} />
     <Feed user={user!}/>
     </div>

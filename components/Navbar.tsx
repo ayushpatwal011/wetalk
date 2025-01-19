@@ -14,8 +14,8 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-black text-white">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+    <nav className="w-full z-50 bg-blue-600  text-black fixed">
+      <div className="container mx-auto px-4 py-1  md:py-4 flex justify-between items-center ">
         {/* Logo */}
         <div className="text-lg font-bold">
             <Image src={"/logo.png"}
@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
                 <UserButton />
             </SignedIn>
             <SignedOut>
-            <Button className='bg-blue-700'>
+            <Button className='bg-black'>
                 <SignInButton />
             </Button>
             </SignedOut>

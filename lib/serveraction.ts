@@ -57,7 +57,7 @@ export const createPostAction = async (inputText: string, selectedFile: string) 
 export const getAllPosts = async () => {
     try {
         await connectDB();
-        const posts = await Post.find().sort({ createdAt: -1 }).populate({ path: 'comments', options: { sort: { createdAt: -1 } } });
+        const posts = await Post.find().sort({ createdAt: -1 })
         if(!posts) return [];
         return JSON.parse(JSON.stringify(posts));
     } catch (error) {
@@ -68,6 +68,8 @@ export const getAllPosts = async () => {
 // delete post by id
 export const deletePostAction = async (postId: string) => {
     await connectDB();
+    console.log(postId);
+    
     const user = await currentUser();
     if (!user) throw new Error('User not authenticated.');
     const post = await Post.findById(postId);

@@ -1,60 +1,52 @@
-import { Button } from "@/components/ui/button";
+
+import { Button } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import ProfilePhoto from "./shared/ProfilePhoto";
-import { Textarea } from "./ui/textarea";
-import React, { useRef, useState } from "react";
-import { readFileAsDataUrl } from "@/lib/utils";
-import Image from "next/image";
-import { Images } from "lucide-react";
-// import { createPostAction } from "@/lib/serveraction";
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog"
+import ProfilePhoto from "./shared/ProfilePhoto"
+import { Textarea } from "./ui/textarea"
+import { Images } from "lucide-react"
+import { useRef, useState } from "react"
+import { readFileAsDataUrl } from "@/lib/utils"
+import Image from "next/image"
+import { createPostAction } from "@/lib/serveraction"
+import { Input } from "./ui/input"
+// import { toast } from "sonner"
 
-export function PostDialog({
-  setOpen,
-  open,
-  src,
-}: {
-  setOpen: (value: boolean) => void;
-  open: boolean;
-  src: string;
-}) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [selectedFile, setSelectedFile] = useState<string>("");
-  const [inputText, setInputText] = useState<string>("");
+export function PostDialog({ setOpen, open, src }: { setOpen: any, open: boolean, src: string }) {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [selectedFile, setSelectedFile] = useState<string>("");
+    const [inputText, setInputText] = useState<string>("");
 
-  const changeHandler = (e : React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setInputText(e.target.value);
-  };
-
-  const fileChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const dataUrl = await readFileAsDataUrl(file);
-      setSelectedFile(dataUrl);
+    const changeHandler = (e: any) => {
+        setInputText(e.target.value);
     }
-  };
-  const postActionHandler = async (formData: FormData) => {
-    const data = formData.get("inputText");
-    try {
-      console.log(data);
-      
-        // await createPostAction(inputText, selectedFile)
-        // setInputText("")
-        // setOpen(false)
-    } catch  {
-        console.log("Error Occure");
-    }
-}
 
-  return (
-    <Dialog open={open}>
-      <DialogContent
+    const fileChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const dataUrl = await readFileAsDataUrl(file);
+            setSelectedFile(dataUrl);
+        }
+    }
+    const postActionHandler = async (formData: FormData) => {
+        const inputText = formData.get('inputText') as string;
+        try {
+            await createPostAction(inputText, selectedFile);
+        } catch (error) {
+            console.log('error occurred', error);
+        }
+        setInputText("");
+        setOpen(false);
+    }
+
+    return (
+        <Dialog open={open}>
+          <DialogContent
         onInteractOutside={() => setOpen(false)}
         className="sm:max-w-[425px] max-h-screen bg-slate-200"
       >
@@ -66,12 +58,12 @@ export function PostDialog({
             </div>
           </DialogTitle>
         </DialogHeader>
-        <form action={""}>
+        <form action={postActionHandler}>
           <div className="flex flex-col  text-gray-800 rounded-md">
             <Textarea
               placeholder="Type your message here."
               value={inputText}
-            //   onChange={changeHandler}
+              onChange={changeHandler}
               id="name"
               name="inputText"
               className="border-none text-base focus-visible:ring-0 "
@@ -119,6 +111,6 @@ export function PostDialog({
           <p>Media</p>
         </Button>
       </DialogContent>
-    </Dialog>
-  );
+        </Dialog>
+    )
 }

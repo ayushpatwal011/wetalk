@@ -4,7 +4,7 @@ import ProfilePhoto from "./shared/ProfilePhoto"
 
 const Slider = ({user}:{user:any}) => {
   return (
-    <div className="hidden lg:block flex-col w-64 h-screen bg-gray-800 text-white  ">
+    <div className="hidden lg:block flex-col w-64 text-white md:block">
       {/* Profile Section */}
       <div className="p-6 border-b border-gray-700">
         <div className="flex items-center  space-x-4">
