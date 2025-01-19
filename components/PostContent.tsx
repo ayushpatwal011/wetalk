@@ -9,8 +9,8 @@ const PostContent = ({post} : {post:IPostDocument}) => {
       {post?.imageUrl && <Image
       src={post?.imageUrl}
       alt='img'
-      width={400}
-      height={400}
+      width={200}
+      height={200}
       />}
     </div>
   )

@@ -15,6 +15,7 @@ import { readFileAsDataUrl } from "@/lib/utils"
 import Image from "next/image"
 import { createPostAction } from "@/lib/serveraction"
 import { Input } from "./ui/input"
+import { toast } from "sonner"
 // import { toast } from "sonner"
 
 export function PostDialog({ setOpen, open, src }: { setOpen: any, open: boolean, src: string }) {
@@ -58,7 +59,14 @@ export function PostDialog({ setOpen, open, src }: { setOpen: any, open: boolean
             </div>
           </DialogTitle>
         </DialogHeader>
-        <form action={postActionHandler}>
+        <form action={(formData)=> {
+          const promise = postActionHandler(formData)
+          toast.promise(promise, {
+            loading:'Creating post...',
+            success:'Post created',
+            error:'Failed to create post'
+        })
+          }}>
           <div className="flex flex-col  text-gray-800 rounded-md">
             <Textarea
               placeholder="Type your message here."
@@ -105,7 +113,7 @@ export function PostDialog({ setOpen, open, src }: { setOpen: any, open: boolean
         <Button
           onClick={() => inputRef?.current?.click()}
           variant={"ghost"}
-          className=" bg-slate-800"
+          className=" bg-blue-800"
         >
           <Images className="text-slate-100" />
           <p>Media</p>
